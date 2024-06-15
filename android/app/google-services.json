@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "682910115888",
+    "firebase_url": "https://tipoff-a1a3c-default-rtdb.firebaseio.com",
+    "project_id": "tipoff-a1a3c",
+    "storage_bucket": "tipoff-a1a3c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682910115888:android:872ea0d12aec5caff4a5f5",
+        "android_client_info": {
+          "package_name": "com.anonymous.tipoffapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682910115888-n09efd8sl4gu3fou1r8rkpgbdg4rvq5c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anonymous.tipoffapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "682910115888-1mf5a5sitp82pk80b6q4l0al73uan0eo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDogEi7ZiHUs7oqi4DgHaa8eQ_7b5kKhVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682910115888-1mf5a5sitp82pk80b6q4l0al73uan0eo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "682910115888-2t7bjb6ek70t400id4a6d3h37jlkknkt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.anonymous.tipoffapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
