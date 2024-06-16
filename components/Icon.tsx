@@ -8,10 +8,16 @@ interface IconProps {
   color?: string;
 }
 
-const Icon: FC<IconProps> = ({ name, size, color = 'black' }) => {
+const Icon: FC<IconProps> = ({ name, size, color = 'white' }) => {
   switch (name) {
     case AvailableIcon.GOOGLE:
       return <Ionicons name="logo-google" size={size} color={color} />;
+    case AvailableIcon.BASKETBALL:
+      return <Ionicons name="basketball-outline" size={size} color={color} />;
+    case AvailableIcon.LOCATION:
+      return <Ionicons name="location-outline" size={size} color={color} />;
+    case AvailableIcon.CLOSE:
+      return <Ionicons name="close-outline" size={size} color={color} />;
     default:
       throw 'Icon does not exist';
   }

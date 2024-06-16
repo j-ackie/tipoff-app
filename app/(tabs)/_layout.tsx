@@ -4,15 +4,17 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import ProfilePicture from '@/components/ProfilePicture';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { useUser } from '@/providers/UserProvider';
+import Loading from '@/components/Loading';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TabLayout() {
   const { user, isLoading } = useUser();
   const colorScheme = useColorScheme();
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <Loading />;
   }
 
   if (!user) {
@@ -22,17 +24,18 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors['dark'].tint,
         headerShown: false,
+        tabBarShowLabel: false,
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="(top-tabs)"
         options={{
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? 'home' : 'home-outline'}
+              name={focused ? 'basketball' : 'basketball-outline'}
               color={color}
             />
           ),
@@ -55,7 +58,15 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, focused }) => (
-            <View style={focused && { borderWidth: 1, borderRadius: 25 }}>
+            <View
+              style={
+                focused && {
+                  borderWidth: 1,
+                  borderRadius: 25,
+                  borderColor: 'white',
+                }
+              }
+            >
               <ProfilePicture size={25} uri={user.profilePictureUri} />
             </View>
           ),

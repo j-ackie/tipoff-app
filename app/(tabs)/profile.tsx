@@ -1,7 +1,8 @@
 import ProfilePicture from '@/components/ProfilePicture';
 import TipoffText from '@/components/TipoffText';
 import { useUser } from '@/providers/UserProvider';
-import { StyleSheet, View } from 'react-native';
+import { getAuth } from 'firebase/auth';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ProfileScreen() {
@@ -9,6 +10,9 @@ export default function ProfileScreen() {
 
   return (
     <SafeAreaView style={styles.screenContainer}>
+      <Pressable onPress={() => getAuth().signOut()}>
+        <TipoffText>Log out</TipoffText>
+      </Pressable>
       <View style={styles.container}>
         <ProfilePicture size={150} uri={user?.profilePictureUri} />
         <View>

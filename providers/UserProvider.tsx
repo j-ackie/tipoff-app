@@ -1,4 +1,5 @@
 import User from '@/firebase/models/user';
+import { createEntity, firebaseObjectToEntity } from '@/firebase/models/utils';
 import { auth, getData, setData } from '@/firebase/utils';
 import { onAuthStateChanged } from 'firebase/auth';
 import {
@@ -36,6 +37,7 @@ const UserProvider = (props: PropsWithChildren) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (userInfo) => {
       if (!userInfo) {
+        setIsLoading(false);
         setUser(null);
         return;
       }
@@ -44,24 +46,18 @@ const UserProvider = (props: PropsWithChildren) => {
       let user: User;
 
       if (!userSnapshot.exists()) {
-        user = {
+        user = createEntity<User>({
           id: userInfo.uid,
           name: userInfo.displayName,
           profilePictureUri: userInfo.photoURL,
-          username: null,
-        };
+        });
 
         await setData(`users/${userInfo.uid}`, {
           name: user.name,
           profilePictureUri: user.profilePictureUri,
         });
       } else {
-        user = {
-          id: userInfo.uid,
-          name: userSnapshot.child('name').val(),
-          profilePictureUri: userSnapshot.child('profilePictureUri').val(),
-          username: userSnapshot.child('username').val(),
-        };
+        user = firebaseObjectToEntity<User>(userInfo.uid, userSnapshot.val());
       }
 
       setUser(user);
