@@ -1,18 +1,20 @@
 import Game from '@/firebase/models/game';
-import { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { FC, useState } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
 import TipoffText from '../TipoffText';
 import Icon from '../Icon';
 import AvailableIcon from '@/constants/availableIcon';
 import { useGetUsersById } from '@/firebase/queries/user';
 import Loading from '../Loading';
 import Team from './Team';
+import GameDetails from './GameDetails';
 
 interface GamePreviewProps {
   game: Game;
 }
 
 const GamePreview: FC<GamePreviewProps> = ({ game }) => {
+  const [gameDetailsVisible, setGameDetailsVisible] = useState(false);
   const team1Results = useGetUsersById(game.team1.playerIds);
   const team2Results = useGetUsersById(game.team2.playerIds);
 
@@ -34,24 +36,36 @@ const GamePreview: FC<GamePreviewProps> = ({ game }) => {
   const team2 = team2Results.map((result) => result.data);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.location}>
-          <Icon name={AvailableIcon.LOCATION} size={20} />
-          <TipoffText style={{ flexShrink: 1 }}>{game.location}</TipoffText>
+    <>
+      <Pressable
+        style={styles.container}
+        onPress={() => setGameDetailsVisible(true)}
+      >
+        <View style={styles.header}>
+          <View style={styles.location}>
+            <Icon name={AvailableIcon.LOCATION} size={20} />
+            <TipoffText style={{ flexShrink: 1 }}>{game.location}</TipoffText>
+          </View>
+          <View style={styles.time}>
+            <TipoffText>
+              {!game.endTime ? 'live!' : game.startTime.getSeconds()}
+            </TipoffText>
+          </View>
         </View>
-        <View style={styles.time}>
-          <TipoffText>
-            {!game.endTime ? 'live!' : game.startTime.getSeconds()}
-          </TipoffText>
+        <View style={styles.teams}>
+          <Team name={game.team1.name} players={team1} />
+          <Icon name={AvailableIcon.CLOSE} size={30} />
+          <Team name={game.team2.name} players={team2} />
         </View>
-      </View>
-      <View style={styles.teams}>
-        <Team name={game.team1.name} players={team1} />
-        <Icon name={AvailableIcon.CLOSE} size={30} />
-        <Team name={game.team2.name} players={team2} />
-      </View>
-    </View>
+      </Pressable>
+      <GameDetails
+        visible={gameDetailsVisible}
+        setVisible={setGameDetailsVisible}
+        game={game}
+        team1={team1}
+        team2={team2}
+      />
+    </>
   );
 };
 

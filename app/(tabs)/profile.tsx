@@ -1,5 +1,6 @@
 import ProfilePicture from '@/components/ProfilePicture';
 import TipoffText from '@/components/TipoffText';
+import UserInfo from '@/components/UserInfo';
 import { useUser } from '@/providers/UserProvider';
 import { getAuth } from 'firebase/auth';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -13,22 +14,7 @@ export default function ProfileScreen() {
       <Pressable onPress={() => getAuth().signOut()}>
         <TipoffText>Log out</TipoffText>
       </Pressable>
-      <View style={styles.container}>
-        <ProfilePicture size={150} uri={user?.profilePictureUri} />
-        <View>
-          <TipoffText style={styles.username}>{user?.username}</TipoffText>
-          <TipoffText>21 years old</TipoffText>
-          <TipoffText>Shooter</TipoffText>
-          <TipoffText>10 games played</TipoffText>
-          <TipoffText>3 commendments</TipoffText>
-        </View>
-      </View>
-      <View style={styles.bioContainer}>
-        <TipoffText>
-          hello my name is daryl, i love playing basketball, i love playing with
-          my friends but also play recreation at my school
-        </TipoffText>
-      </View>
+      {user && <UserInfo user={user} />}
       <View></View>
     </SafeAreaView>
   );

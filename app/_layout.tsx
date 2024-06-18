@@ -8,6 +8,7 @@ import { UserProvider } from '@/providers/UserProvider';
 import { Keyboard, Pressable } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const queryClient = new QueryClient();
 
@@ -30,24 +31,26 @@ export default function RootLayout() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <UserProvider>
-        <StatusBar style="light" />
-        <ThemeProvider value={DarkTheme}>
-          <Pressable
-            style={{ flex: 1 }}
-            onPress={Keyboard.dismiss}
-            android_disableSound
-          >
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-              <Stack.Screen name="sign-up" options={{ headerShown: false }} />
-              <Stack.Screen name="+not-found" />
-            </Stack>
-          </Pressable>
-        </ThemeProvider>
-      </UserProvider>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <QueryClientProvider client={queryClient}>
+        <UserProvider>
+          <StatusBar style="light" />
+          <ThemeProvider value={DarkTheme}>
+            <Pressable
+              style={{ flex: 1 }}
+              onPress={Keyboard.dismiss}
+              android_disableSound
+            >
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+                <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </Pressable>
+          </ThemeProvider>
+        </UserProvider>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }

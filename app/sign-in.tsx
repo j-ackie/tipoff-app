@@ -6,9 +6,10 @@ import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { auth } from '@/firebase/utils';
-import { router } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 import Icon from '@/components/Icon';
 import TipoffTextInput from '@/components/TipoffTextInput';
+import { useUser } from '@/providers/UserProvider';
 
 GoogleSignin.configure({
   webClientId:
@@ -16,13 +17,18 @@ GoogleSignin.configure({
 });
 
 const SignInScreen = () => {
+  const { user } = useUser();
+
+  if (user) {
+    return <Redirect href="/" />;
+  }
+
   const handleSignInWithGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       const authCredential = GoogleAuthProvider.credential(userInfo.idToken);
       await signInWithCredential(auth, authCredential);
-      router.replace('/');
     } catch (error) {
       console.log(error);
     }
