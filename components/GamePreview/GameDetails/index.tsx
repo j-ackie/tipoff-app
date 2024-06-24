@@ -15,8 +15,8 @@ interface GameDetailsProps {
   visible: boolean;
   setVisible: (visible: boolean) => void;
   game: Game;
-  team1: (User | undefined)[];
-  team2: (User | undefined)[];
+  team1?: (User | undefined)[];
+  team2?: (User | undefined)[];
 }
 
 const width = Dimensions.get('window').width * 0.8;

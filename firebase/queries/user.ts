@@ -11,11 +11,13 @@ const getUserById = async (id: string) => {
   return firebaseObjectToEntity<User>(id, userSnapshot.val());
 };
 
-const useGetUsersById = (userIds: string[]): UseQueryResult<User>[] =>
-  useQueries({
-    queries: userIds.map((userId) => ({
-      queryKey: ['users', userId],
-      queryFn: () => getUserById(userId),
-    })),
-  });
+const useGetUsersById = (userIds?: string[]): UseQueryResult<User>[] | null =>
+  userIds
+    ? useQueries({
+        queries: userIds.map((userId) => ({
+          queryKey: ['users', userId],
+          queryFn: () => getUserById(userId),
+        })),
+      })
+    : null;
 export { useGetUsersById };

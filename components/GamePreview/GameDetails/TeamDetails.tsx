@@ -7,13 +7,13 @@ import { Dimensions, View } from 'react-native';
 
 interface TeamDetailsProps {
   game: Game;
-  team: (User | undefined)[];
+  team?: (User | undefined)[];
 }
 const width = Dimensions.get('window').width * 0.8;
 const TeamDetails: FC<TeamDetailsProps> = ({ game, team }) => {
   return (
     <View style={{ width }}>
-      {team.map((player) =>
+      {team?.map((player) =>
         player === undefined ? null : <UserInfo user={player} />
       )}
       <TipoffText>meet</TipoffText>

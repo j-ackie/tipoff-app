@@ -1,7 +1,8 @@
+import { Id } from './scalars';
 import { createEntity } from './utils';
 
 type User = {
-  id: string;
+  id: Id;
   name: string | null;
   username: string | null;
   profilePictureUri: string | null;

@@ -6,9 +6,8 @@ import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 import { auth } from '@/firebase/utils';
-import { Redirect, router } from 'expo-router';
+import { Redirect } from 'expo-router';
 import Icon from '@/components/Icon';
-import TipoffTextInput from '@/components/TipoffTextInput';
 import { useUser } from '@/providers/UserProvider';
 
 GoogleSignin.configure({
@@ -40,32 +39,11 @@ const SignInScreen = () => {
         <Icon name={AvailableIcon.BASKETBALL} size={40} />
         <TipoffText style={styles.title}>tipoff</TipoffText>
       </View>
-
-      <TipoffTextInput
-        label="username"
-        autoCapitalize="none"
-        autoCorrect={false}
-      />
-      <TipoffTextInput
-        label="password"
-        autoCapitalize="none"
-        autoCorrect={false}
-        secureTextEntry
-      />
-      <TextButton title="login" />
       <TextButton
         onPress={handleSignInWithGoogle}
         leftIcon={AvailableIcon.GOOGLE}
-        title="sign in with Google"
+        title="sign in with google"
       />
-
-      <View style={styles.newAroundHere}>
-        <TipoffText>new around here?</TipoffText>
-        <TextButton
-          title="sign up"
-          onPress={() => router.replace('/sign-up')}
-        />
-      </View>
     </SafeAreaView>
   );
 };

@@ -3,14 +3,20 @@ const createEntity = <T extends { id: string }>(
 ): T => {
   const { id, ...rest } = props;
 
-  console.log({
-    id,
-    ...rest,
-  } as T);
   return {
     id,
     ...rest,
   } as T;
+};
+
+const createEntityWithoutId = <T extends { id: string }>(
+  props: Omit<Partial<T>, 'id'>
+): Omit<T, 'id'> => {
+  const { ...rest } = props;
+
+  return {
+    ...rest,
+  } as Omit<T, 'id'>;
 };
 
 const firebaseObjectToEntity = <T extends { id: string }>(
@@ -28,4 +34,9 @@ const firebaseObjectsToEntities = <T extends { id: string }>(
   );
 };
 
-export { createEntity, firebaseObjectToEntity, firebaseObjectsToEntities };
+export {
+  createEntity,
+  createEntityWithoutId,
+  firebaseObjectToEntity,
+  firebaseObjectsToEntities,
+};

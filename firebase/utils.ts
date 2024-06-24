@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { get, getDatabase, ref, set } from 'firebase/database';
+import { get, getDatabase, push, ref, set } from 'firebase/database';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 // Your web app's Firebase configuration
@@ -33,4 +33,8 @@ const setData = async (path: string, data: any) => {
   return await set(ref(db, path), data);
 };
 
-export { app, auth, getData, setData };
+const pushData = async (path: string, data: any) => {
+  return await push(ref(db, path), data);
+};
+
+export { app, auth, getData, setData, pushData };

@@ -4,6 +4,8 @@ import TipoffText from '@/components/TipoffText';
 import GamePreview from '@/components/GamePreview';
 import { useGetGames } from '@/firebase/queries/game';
 import Loading from '@/components/Loading';
+import TextButton from '@/components/TextButton';
+import { router } from 'expo-router';
 
 export default function HomeScreen() {
   const { data, isLoading, isError } = useGetGames();
@@ -20,54 +22,20 @@ export default function HomeScreen() {
     );
   }
 
-  // if (data.length === 0) {
-  //   return (
-  //     <View style={styles.noDataContainer}>
-  //       <TipoffText style={styles.noData}>it's kinda quiet in here</TipoffText>
-  //     </View>
-  //   );
-  // }
+  if (data.length === 0) {
+    return (
+      <View style={styles.noDataContainer}>
+        <TipoffText style={styles.noData}>it's kinda quiet in here</TipoffText>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <GamePreview
-        game={{
-          id: '1',
-          location: '1305, eastwood st, brooklyn, ny 12345',
-          team1: {
-            name: 'Dream Team',
-            playerIds: [
-              'xE1pWgiRwoQWDxQVscPUpAxplH53',
-              'xE1pWgiRwoQWDxQVscPUpAxplH53',
-            ],
-          },
-          team2: {
-            name: 'Bob',
-            playerIds: [
-              'xE1pWgiRwoQWDxQVscPUpAxplH53',
-              'xE1pWgiRwoQWDxQVscPUpAxplH53',
-            ],
-          },
-          startTime: new Date(),
-          endTime: null,
-        }}
-      />
-      <GamePreview
-        game={{
-          id: '1',
-          location: '1305, eastwood st, brooklyn, ny 12345',
-          team1: {
-            name: 'Dream Team',
-            playerIds: ['xE1pWgiRwoQWDxQVscPUpAxplH53'],
-          },
-          team2: {
-            name: 'Bob',
-            playerIds: ['xE1pWgiRwoQWDxQVscPUpAxplH53'],
-          },
-          startTime: new Date(),
-          endTime: new Date(),
-        }}
-      />
+      <TextButton title="create" onPress={() => router.push('create-match')} />
+      {data.map((game) => (
+        <GamePreview key={game.id} game={game} />
+      ))}
     </View>
   );
 }

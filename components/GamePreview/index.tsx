@@ -16,24 +16,24 @@ interface GamePreviewProps {
 const GamePreview: FC<GamePreviewProps> = ({ game }) => {
   const [gameDetailsVisible, setGameDetailsVisible] = useState(false);
   const team1Results = useGetUsersById(game.team1.playerIds);
-  const team2Results = useGetUsersById(game.team2.playerIds);
+  const team2Results = useGetUsersById(game.team2?.playerIds);
 
   if (
-    team1Results.some((result) => result.isLoading) ||
-    team2Results.some((result) => result.isLoading)
+    team1Results?.some((result) => result.isLoading) ||
+    team2Results?.some((result) => result.isLoading)
   ) {
     return <Loading />;
   }
 
   if (
-    team1Results.some((result) => result.isError) ||
-    team2Results.some((result) => result.isError)
+    team1Results?.some((result) => result.isError) ||
+    team2Results?.some((result) => result.isError)
   ) {
     return <TipoffText>Failed to load users</TipoffText>;
   }
 
-  const team1 = team1Results.map((result) => result.data);
-  const team2 = team2Results.map((result) => result.data);
+  const team1 = team1Results?.map((result) => result.data);
+  const team2 = team2Results?.map((result) => result.data);
 
   return (
     <>
@@ -53,9 +53,13 @@ const GamePreview: FC<GamePreviewProps> = ({ game }) => {
           </View>
         </View>
         <View style={styles.teams}>
-          <Team name={game.team1.name} players={team1} />
+          {game.team1 && team1 && (
+            <Team name={game.team1.name} players={team1} />
+          )}
           <Icon name={AvailableIcon.CLOSE} size={30} />
-          <Team name={game.team2.name} players={team2} />
+          {game.team2 && team2 && (
+            <Team name={game.team2.name} players={team2} />
+          )}
         </View>
       </Pressable>
       <GameDetails
